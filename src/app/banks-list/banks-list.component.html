@@ -6,11 +6,11 @@
         (change)="refreshBranches()"
         class="form-control form-control"
       >
-        <option>Mumbai</option>
-        <option>Noida</option>
-        <option>Delhi</option>
-        <option>Pune</option>
-        <option>Bangalore</option>
+        <option
+          *ngFor="let i of ['Mumbai', 'Noida', 'Delhi', 'Pune', 'Bangalore']"
+        >
+          {{ i }}
+        </option>
       </select>
     </div>
     <div class="col-6">
@@ -104,11 +104,7 @@
       (change)="refreshBranches()"
       class="form-control form-control"
     >
-      <option>10</option>
-      <option>20</option>
-      <option>50</option>
-      <option>100</option>
-      <option>500</option>
+      <option *ngFor="let i of [10, 20, 50, 100]">{{ i }}</option>
     </select>
   </div>
 </div>
