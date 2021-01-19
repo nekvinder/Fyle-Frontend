@@ -3,7 +3,7 @@
   <div class="col align-self-center">
     <form>
       <div class="row align-items-center">
-        <div class="col-2 align-self-start">
+        <div class="col-lg-2 col-md-12 align-self-center my-2">
           <div
             class="btn-group btn-group-toggle"
             ngbRadioGroup
@@ -20,15 +20,15 @@
             </label>
           </div>
         </div>
-        <div class="col-6 align-self-center">
+        <div class="col-lg-6 col-md-6 align-self-center">
           <input
             placeholder="Full text search:"
-            class="form-control ml-2"
+            class="form-control"
             type="text"
             [formControl]="filter"
           />
         </div>
-        <div *ngIf="model == 'All'" class="col align-self-center">
+        <div *ngIf="model == 'All'" class="col-lg-4 col-md-6 align-self-center">
           <select
             [formControl]="city"
             (change)="refreshBranches()"
@@ -141,25 +141,32 @@
     </div>
   </div>
 </div>
-<div *ngIf="model == 'All'" class="d-flex justify-content-center">
-  <ngb-pagination
-    [collectionSize]="collectionSize"
-    [(page)]="page"
-    [pageSize]="pageSize"
-    (pageChange)="refreshBranches()"
-    [maxSize]="10"
-    [rotate]="true"
-    [ellipses]="false"
-    [boundaryLinks]="true"
-  >
-  </ngb-pagination>
-  <div class="col-2 justify-content-right">
-    <select
-      [formControl]="pageSizeCtrl"
-      (change)="refreshBranches()"
-      class="form-control form-control"
-    >
-      <option *ngFor="let i of [10, 20, 50, 100]">{{ i }}</option>
-    </select>
+
+<div *ngIf="model == 'All'" class="row align-middle align-items-center my-2">
+  <div class="col-12 align-self-center">
+    <div class="d-flex justify-content-center">
+      <ngb-pagination
+        [collectionSize]="collectionSize"
+        [(page)]="page"
+        [pageSize]="pageSize"
+        (pageChange)="refreshBranches()"
+        [maxSize]="7"
+        [rotate]="true"
+      >
+      </ngb-pagination>
+    </div>
+  </div>
+
+  <div class="col-12 align-middle btn align-self-center">
+    Show Records:
+    <div class="col-2 align-middle btn align-self-center">
+      <select
+        [formControl]="pageSizeCtrl"
+        (change)="refreshBranches()"
+        class="form-control form-control"
+      >
+        <option *ngFor="let i of [10, 20, 50, 100]">{{ i }}</option>
+      </select>
+    </div>
   </div>
 </div>
