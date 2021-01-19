@@ -27,7 +27,7 @@ export interface Branch {
 })
 export class ApiService {
   constructor(private http: HttpClient) {}
-  apiUrl = 'http://127.0.0.1:8000/';
+  apiUrl = 'https://radiant-oasis-80551.herokuapp.com/';
 
   cache = {};
 
