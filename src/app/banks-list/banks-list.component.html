@@ -1,0 +1,114 @@
+<form>
+  <div class="row mx-2 my-2">
+    <div class="col-4">
+      <select
+        [formControl]="city"
+        (change)="refreshBranches()"
+        class="form-control form-control"
+      >
+        <option>Mumbai</option>
+        <option>Noida</option>
+        <option>Delhi</option>
+        <option>Pune</option>
+        <option>Bangalore</option>
+      </select>
+    </div>
+    <div class="col-6">
+      <input
+        placeholder="Full text search:"
+        class="form-control ml-2"
+        type="text"
+        [formControl]="filter"
+      />
+    </div>
+  </div>
+</form>
+<div class="table-responsive table-wrap">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">IFSC</th>
+        <th scope="col">Branch</th>
+        <th scope="col">Address</th>
+        <th scope="col">City</th>
+        <th scope="col">District</th>
+        <th scope="col">State</th>
+        <th scope="col">Bank</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let country of countries$ | async; index as i">
+        <th scope="row">{{ (page - 1) * pageSize + i + 1 }}</th>
+        <td>
+          <ngb-highlight
+            [result]="country.ifsc"
+            [term]="filter.value"
+          ></ngb-highlight>
+        </td>
+        <td>
+          <ngb-highlight
+            [result]="country.branch"
+            [term]="filter.value"
+          ></ngb-highlight>
+        </td>
+        <td>
+          <ngb-highlight
+            [result]="country.address"
+            [term]="filter.value"
+          ></ngb-highlight>
+        </td>
+        <td>
+          <ngb-highlight
+            [result]="country.city"
+            [term]="filter.value"
+          ></ngb-highlight>
+        </td>
+        <td>
+          <ngb-highlight
+            [result]="country.district"
+            [term]="filter.value"
+          ></ngb-highlight>
+        </td>
+        <td>
+          <ngb-highlight
+            [result]="country.state"
+            [term]="filter.value"
+          ></ngb-highlight>
+        </td>
+        <td>
+          <ngb-highlight
+            [result]="country.bank"
+            [term]="filter.value"
+          ></ngb-highlight>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<div class="d-flex justify-content-center">
+  <ngb-pagination
+    [collectionSize]="collectionSize"
+    [(page)]="page"
+    [pageSize]="pageSize"
+    (pageChange)="refreshBranches()"
+    [maxSize]="10"
+    [rotate]="true"
+    [ellipses]="false"
+    [boundaryLinks]="true"
+  >
+  </ngb-pagination>
+  <div class="col-2 justify-content-right">
+    <select
+      [formControl]="pageSizeCtrl"
+      (change)="refreshBranches()"
+      class="form-control form-control"
+    >
+      <option>10</option>
+      <option>20</option>
+      <option>50</option>
+      <option>100</option>
+      <option>500</option>
+    </select>
+  </div>
+</div>
