@@ -31,7 +31,6 @@ export enum ViewType {
 })
 export class BanksListComponent {
   model = ViewType.All;
-
   branches$: Observable<Branch[]>;
   filter = new FormControl('');
   pageSizeCtrl = new FormControl(10);

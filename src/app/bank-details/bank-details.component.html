@@ -1,0 +1,42 @@
+<h1 class="card-title">Bank's Details</h1>
+<div class="row align-items-center my-2">
+  <div class="col align-self-center">
+    <form *ngIf="branch">
+      <div class="mb-3">
+        <label for="exampleFormControlInput1" class="form-label"
+          >Bank Name</label
+        >
+        <input type="email" class="form-control" [value]="branch.bank" />
+      </div>
+      <div class="mb-3">
+        <label for="exampleFormControlInput1" class="form-label"
+          >Branch Name</label
+        >
+        <input type="email" class="form-control" [value]="branch.branch" />
+      </div>
+      <div class="mb-3">
+        <label for="exampleFormControlInput1" class="form-label"
+          >Branch Address</label
+        >
+        <input type="email" class="form-control" [value]="branch.address" />
+      </div>
+      <div class="mb-3">
+        <label for="exampleFormControlInput1" class="form-label">City</label>
+        <input type="email" class="form-control" [value]="branch.city" />
+      </div>
+      <div class="mb-3">
+        <label for="exampleFormControlInput1" class="form-label"
+          >District</label
+        >
+        <input type="email" class="form-control" [value]="branch.district" />
+      </div>
+      <div class="mb-3">
+        <label for="exampleFormControlInput1" class="form-label"
+          >Bank State</label
+        >
+        <input type="email" class="form-control" [value]="branch.state" />
+      </div>
+    </form>
+    <a class="btn btn-danger" [routerLink]="'/banks'">Close </a>
+  </div>
+</div>

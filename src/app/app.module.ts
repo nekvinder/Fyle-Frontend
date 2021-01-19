@@ -8,9 +8,10 @@ import { BanksListComponent } from './banks-list/banks-list.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { BankDetailsComponent } from './bank-details/bank-details.component';
 
 @NgModule({
-  declarations: [AppComponent, BanksListComponent],
+  declarations: [AppComponent, BanksListComponent, BankDetailsComponent],
   imports: [
     BrowserModule,
     ReactiveFormsModule,

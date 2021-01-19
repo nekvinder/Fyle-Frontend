@@ -43,6 +43,24 @@ export class ApiService {
     );
   }
 
+  getBranch(ifsc: string): Observable<Branch> {
+    if (this.cache[ifsc]) {
+      return this.cache[ifsc];
+    }
+
+    this.cache[ifsc] = this.http
+      .get<Branch>(this.apiUrl + `branches/${ifsc}/`)
+      .pipe(
+        shareReplay(1),
+        catchError((err) => {
+          delete this.cache[ifsc];
+          return null;
+        })
+      );
+
+    return this.cache[ifsc];
+  }
+
   getApiResponse<T>(url: string): Observable<ApiResponse<T>> {
     //for caching api calls
     if (this.cache[url]) {
@@ -57,6 +75,6 @@ export class ApiService {
       })
     );
 
-    return this.http.get<ApiResponse<T>>(url);
+    return this.cache[url];
   }
 }

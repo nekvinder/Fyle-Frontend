@@ -1,169 +1,165 @@
-<div class="container-fluid">
-  <div class="row">
-    <div class="col px-4 py-2">
-      <h1 class="card-title">Bank Branches</h1>
-      <div class="row align-items-center my-2">
-        <div class="col align-self-center">
-          <form>
-            <div class="row align-items-center">
-              <div class="col-2 align-self-start">
-                <div
-                  class="btn-group btn-group-toggle"
-                  ngbRadioGroup
-                  (change)="refreshBranches()"
-                  name="radioBasic"
-                  [(ngModel)]="model"
-                >
-                  <label ngbButtonLabel class="btn-primary">
-                    <input ngbButton type="radio" value="All" /> Show All
-                  </label>
-                  <label ngbButtonLabel class="btn-primary">
-                    <input ngbButton type="radio" value="Favourites" /> Show
-                    Favourites
-                  </label>
-                </div>
-              </div>
-              <div class="col-6 align-self-end">
-                <input
-                  placeholder="Full text search:"
-                  class="form-control ml-2"
-                  type="text"
-                  [formControl]="filter"
-                />
-              </div>
-              <div *ngIf="model == 'All'" class="col align-self-center">
-                <select
-                  [formControl]="city"
-                  (change)="refreshBranches()"
-                  class="form-control form-control"
-                >
-                  <option
-                    *ngFor="
-                      let i of ['Mumbai', 'Noida', 'Delhi', 'Pune', 'Bangalore']
-                    "
-                  >
-                    {{ i }}
-                  </option>
-                </select>
-              </div>
-            </div>
-          </form>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col">
-          <div class="table-responsive table-wrap">
-            <table class="table table-bordered table-striped">
-              <thead>
-                <tr>
-                  <th scope="col">#</th>
-                  <th scope="col">Bank</th>
-                  <th scope="col">IFSC</th>
-                  <th scope="col">Branch</th>
-                  <th scope="col">Address</th>
-                  <th scope="col">City</th>
-                  <th scope="col">District</th>
-                  <th scope="col">State</th>
-                  <th scope="col">Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let branch of branches$ | async; index as i">
-                  <th *ngIf="model == 'All'" scope="row">
-                    {{ (page - 1) * pageSize + i + 1 }}
-                  </th>
-                  <th *ngIf="model == 'Favourites'" scope="row">
-                    {{ i + 1 }}
-                  </th>
-                  <td>
-                    <ngb-highlight
-                      [result]="branch.bank"
-                      [term]="filter.value"
-                    ></ngb-highlight>
-                  </td>
-                  <td>
-                    <ngb-highlight
-                      [result]="branch.ifsc"
-                      [term]="filter.value"
-                    ></ngb-highlight>
-                  </td>
-                  <td>
-                    <ngb-highlight
-                      [result]="branch.branch"
-                      [term]="filter.value"
-                    ></ngb-highlight>
-                  </td>
-                  <td>
-                    <ngb-highlight
-                      [result]="branch.address"
-                      [term]="filter.value"
-                    ></ngb-highlight>
-                  </td>
-                  <td>
-                    <ngb-highlight
-                      [result]="branch.city"
-                      [term]="filter.value"
-                    ></ngb-highlight>
-                  </td>
-                  <td>
-                    <ngb-highlight
-                      [result]="branch.district"
-                      [term]="filter.value"
-                    ></ngb-highlight>
-                  </td>
-                  <td>
-                    <ngb-highlight
-                      [result]="branch.state"
-                      [term]="filter.value"
-                    ></ngb-highlight>
-                  </td>
-                  <td>
-                    <button
-                      placement="top"
-                      ngbTooltip="Add to favourites"
-                      type="button"
-                      (click)="addToFav(branch)"
-                      class="btn btn-link"
-                    >
-                      <span
-                        class="material-icons"
-                        [ngClass]="{
-                          favourite: branch.favourite,
-                          notfavourite: !branch.favourite
-                        }"
-                      >
-                        star_rate
-                      </span>
-                    </button>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+<h1 class="card-title">Bank Branches</h1>
+<div class="row align-items-center my-2">
+  <div class="col align-self-center">
+    <form>
+      <div class="row align-items-center">
+        <div class="col-2 align-self-start">
+          <div
+            class="btn-group btn-group-toggle"
+            ngbRadioGroup
+            (change)="refreshBranches()"
+            name="radioBasic"
+            [(ngModel)]="model"
+          >
+            <label ngbButtonLabel class="btn-primary">
+              <input ngbButton type="radio" value="All" /> Show All
+            </label>
+            <label ngbButtonLabel class="btn-primary">
+              <input ngbButton type="radio" value="Favourites" /> Show
+              Favourites
+            </label>
           </div>
         </div>
-      </div>
-      <div *ngIf="model == 'All'" class="d-flex justify-content-center">
-        <ngb-pagination
-          [collectionSize]="collectionSize"
-          [(page)]="page"
-          [pageSize]="pageSize"
-          (pageChange)="refreshBranches()"
-          [maxSize]="10"
-          [rotate]="true"
-          [ellipses]="false"
-          [boundaryLinks]="true"
-        >
-        </ngb-pagination>
-        <div class="col-2 justify-content-right">
+        <div class="col-6 align-self-center">
+          <input
+            placeholder="Full text search:"
+            class="form-control ml-2"
+            type="text"
+            [formControl]="filter"
+          />
+        </div>
+        <div *ngIf="model == 'All'" class="col align-self-center">
           <select
-            [formControl]="pageSizeCtrl"
+            [formControl]="city"
             (change)="refreshBranches()"
             class="form-control form-control"
           >
-            <option *ngFor="let i of [10, 20, 50, 100]">{{ i }}</option>
+            <option
+              *ngFor="
+                let i of ['Mumbai', 'Noida', 'Delhi', 'Pune', 'Bangalore']
+              "
+            >
+              {{ i }}
+            </option>
           </select>
         </div>
       </div>
+    </form>
+  </div>
+</div>
+<div class="row">
+  <div class="col">
+    <div class="table-responsive table-wrap">
+      <table class="table table-bordered table-striped">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Bank</th>
+            <th scope="col">IFSC</th>
+            <th scope="col">Branch</th>
+            <th scope="col">Address</th>
+            <th scope="col">City</th>
+            <th scope="col">District</th>
+            <th scope="col">State</th>
+            <th scope="col">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let branch of branches$ | async; index as i">
+            <th *ngIf="model == 'All'" scope="row">
+              {{ (page - 1) * pageSize + i + 1 }}
+            </th>
+            <th *ngIf="model == 'Favourites'" scope="row">
+              {{ i + 1 }}
+            </th>
+            <td>
+              <a [routerLink]="'/banks/' + branch.ifsc">
+                <ngb-highlight
+                  [result]="branch.bank"
+                  [term]="filter.value"
+                ></ngb-highlight>
+              </a>
+            </td>
+            <td>
+              <ngb-highlight
+                [result]="branch.ifsc"
+                [term]="filter.value"
+              ></ngb-highlight>
+            </td>
+            <td>
+              <ngb-highlight
+                [result]="branch.branch"
+                [term]="filter.value"
+              ></ngb-highlight>
+            </td>
+            <td>
+              <ngb-highlight
+                [result]="branch.address"
+                [term]="filter.value"
+              ></ngb-highlight>
+            </td>
+            <td>
+              <ngb-highlight
+                [result]="branch.city"
+                [term]="filter.value"
+              ></ngb-highlight>
+            </td>
+            <td>
+              <ngb-highlight
+                [result]="branch.district"
+                [term]="filter.value"
+              ></ngb-highlight>
+            </td>
+            <td>
+              <ngb-highlight
+                [result]="branch.state"
+                [term]="filter.value"
+              ></ngb-highlight>
+            </td>
+            <td>
+              <button
+                placement="top"
+                ngbTooltip="Add to favourites"
+                type="button"
+                (click)="addToFav(branch)"
+                class="btn btn-link"
+              >
+                <span
+                  class="material-icons"
+                  [ngClass]="{
+                    favourite: branch.favourite,
+                    notfavourite: !branch.favourite
+                  }"
+                >
+                  star_rate
+                </span>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
+  </div>
+</div>
+<div *ngIf="model == 'All'" class="d-flex justify-content-center">
+  <ngb-pagination
+    [collectionSize]="collectionSize"
+    [(page)]="page"
+    [pageSize]="pageSize"
+    (pageChange)="refreshBranches()"
+    [maxSize]="10"
+    [rotate]="true"
+    [ellipses]="false"
+    [boundaryLinks]="true"
+  >
+  </ngb-pagination>
+  <div class="col-2 justify-content-right">
+    <select
+      [formControl]="pageSizeCtrl"
+      (change)="refreshBranches()"
+      class="form-control form-control"
+    >
+      <option *ngFor="let i of [10, 20, 50, 100]">{{ i }}</option>
+    </select>
   </div>
 </div>
