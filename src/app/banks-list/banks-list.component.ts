@@ -30,7 +30,7 @@ export enum ViewType {
   providers: [],
 })
 export class BanksListComponent {
-  model = ViewType.Favourites;
+  model = ViewType.All;
 
   branches$: Observable<Branch[]>;
   filter = new FormControl('');
