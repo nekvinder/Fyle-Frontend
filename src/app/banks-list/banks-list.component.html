@@ -64,7 +64,14 @@
             <th scope="col">Action</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody *ngIf="loading">
+          <div class="text-center">
+            <div class="spinner-border" role="status">
+              <span class="sr-only">Loading...</span>
+            </div>
+          </div>
+        </tbody>
+        <tbody *ngIf="!loading">
           <tr *ngFor="let branch of branches$ | async; index as i">
             <th *ngIf="model == 'All'" scope="row">
               {{ (page - 1) * pageSize + i + 1 }}

@@ -35,6 +35,7 @@ export class BanksListComponent {
   filter = new FormControl('');
   pageSizeCtrl = new FormControl(10);
   city = new FormControl('Mumbai');
+  loading = false;
 
   constructor(
     private apiService: ApiService,
@@ -55,6 +56,7 @@ export class BanksListComponent {
   }
 
   refreshBranches() {
+    this.loading = true;
     if (this.model == ViewType.All) {
       this.apiService
         .getBranches(
@@ -96,5 +98,6 @@ export class BanksListComponent {
         )
       )
     );
+    this.loading = false;
   }
 }
